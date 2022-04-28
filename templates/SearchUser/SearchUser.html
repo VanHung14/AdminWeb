@@ -1,0 +1,21 @@
+{% extends 'home/base.html'%}
+{% load static%}
+
+ {% block contentblock%}
+
+      <!--   Content   -->
+      <div class="content">
+           <form style="width:60%; height:30px" action="user/edit"  method="POST">
+             {% csrf_token %}
+              <div class="input-group no-border" >
+                <input type="text" value="" class="form-control" placeholder="Search..." name="people_id">
+                <div class="input-group-append">
+                  <div class="input-group-text">
+                    <input type = "submit" value="Submit"> <i class="nc-icon nc-zoom-split"></i>
+                  </div>
+                </div>
+              </div>
+            </form>
+      </div>
+      <!-- End Content -->
+{% endblock %}

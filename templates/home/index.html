@@ -1,0 +1,116 @@
+<!--
+=========================================================
+* Paper Dashboard 2 - v2.0.1
+=========================================================
+
+* Product Page: https://www.creative-tim.com/product/paper-dashboard-2
+* Copyright 2020 Creative Tim (https://www.creative-tim.com)
+
+Coded by www.creative-tim.com
+
+ =========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+-->
+{% extends 'home/base.html'%}
+{% load static%}
+
+
+   {% block contentblock%}
+
+      <!--   Content   -->
+      <div class="content">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="card card-user">
+              <div class="image">
+                <img src="{% static 'img/damir-bosnjak.jpg' %}" alt="...">
+              </div>
+              <div class="card-body">
+                <div class="author">
+                  <a href="#">
+                    <img class="avatar border-gray" src="{% static 'img/mike.jpg' %}" alt="...">
+                    <h5 style="font-size:30px;margin-bottom:20px" class="title">{{people.Name}}</h5>
+                  </a>
+                  <p class="description">
+
+                  </p>
+                </div>
+                <p style="font-size:26px" class="description text-center">
+                  {% if people.RoleID == 1 %}
+                  Admin
+                  {%else%} User
+                  {% endif %}
+                </p>
+              </div>
+
+            </div>
+
+          </div>
+          <div class="col-md-8">
+            <div class="card card-user">
+              <div class="card-header">
+                <h5 class="card-title">Edit Profile</h5>
+              </div>
+              <div class="card-body">
+                <form method="post" action="{% url 'home:update' people.ID%}">
+                  {% csrf_token %}
+                  <div class="row">
+                    <div class="col-md-5 pr-1">
+                      <div class="form-group">
+                        <label>Role</label>
+                        <input type="text" name="RoleID" class="form-control"  placeholder="Company" disabled
+                               value="{% if people.RoleID == 1 %}Admin{%else%}User{% endif %}">
+                      </div>
+                    </div>
+                    <div class="col-md-5 pr-1">
+                      <div class="form-group">
+                        <label>ID</label>
+                        <input type="text" name="ID" class="form-control" placeholder="ID" disabled value="{{people.ID}}">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-10 ">
+                      <div class="form-group">
+                        <label>Tên</label>
+                        <input type="text" class="form-control" name="Name" placeholder="Company" value="{{people.Name}}">
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="row">
+                    <div class="col-md-4 pr-1">
+                      <div class="form-group">
+                        <label>Tuổi</label>
+                        <input type="text" class="form-control" name="Age" placeholder="Age" value="{{people.Age}}">
+                      </div>
+                    </div>
+                    <div class="col-md-4 px-1">
+                      <div class="form-group">
+                        <label>Giới tính</label>
+                        <input type="text" class="form-control" name="Gender" placeholder="Country" value="{% if people.Gender == 1  %}Nam{% else %}Nữ{%endif%}">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-10">
+                      <div class="form-group">
+                        <label>RFID</label>
+                        <input type="text" name="RFID" class="form-control" placeholder="RFID" value="{{people.RFID}}">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="update ml-auto mr-auto">
+                      <button type="submit" class="btn btn-primary btn-round">Update Profile</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End Content -->
+    {% endblock %}
