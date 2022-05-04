@@ -1,6 +1,39 @@
 
 {% extends 'home/base.html'%}
 {% load static%}
+{% block sidebarblock%}
+ <div class="sidebar-wrapper">
+       <ul class="nav">
+          <li>
+            <a href="./dashboard">
+              <i class="nc-icon nc-bank"></i>
+              <p>Dashboard</p>
+            </a>
+          </li>
+          <li >
+            <a href="{% url 'home:notification' %}">
+              <i class="nc-icon nc-bell-55"></i>
+              <p>Notifications</p>
+            </a>
+          </li>
+          <li >
+            <a href="{% url 'home:detail' request.session.people_id %}">
+              <i class="nc-icon nc-single-02"></i>
+              <p>User Profile</p>
+            </a>
+          </li>
+          {% if request.session.role_id == 1 %}
+          <li class="active" >
+            <a href="{% url 'home:tablelist' %}">
+              <i class="nc-icon nc-tile-56"></i>
+              <p>List User </p>
+            </a>
+          </li>
+          {% endif%}
+
+        </ul>
+      </div>
+          {% endblock %}
    {% block contentblock%}
    
       <!--   Content   -->
@@ -13,12 +46,11 @@
 
                  <form method="post" action="{% url 'home:search' %}">
                    {% csrf_token %}
-                  <div class="input-group no-border" >
-                    <input type="text" name="strSearch" value="" class="form-control" placeholder="Search...">
+                  <div style="width:40%" class="input-group no-border" >
+                    <input  type="text" name="strSearch" value="" class="form-control" placeholder="Search..." >
                     <div class="input-group-append">
                       <div class="input-group-text">
-                        <i class="nc-icon nc-zoom-split"></i>
-                        <button type="submit" class="btn btn-primary btn-round">Search</button>
+                        <button type="submit" class="btn btn-primary btn-round"><i class="nc-icon nc-zoom-split"></i></button>
                       </div>
                     </div>
                   </div>
