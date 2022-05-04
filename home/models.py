@@ -1,7 +1,6 @@
 import datetime
 
 from django.db import models
-
 # Create your models here.
 class People(models.Model):
     ID = models.IntegerField(primary_key=True, null=False, default=0)

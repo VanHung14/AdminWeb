@@ -4,6 +4,7 @@ from home.models import People,Account,TimeRecord
 from home.form import PeopleForm
 from django.contrib import messages
 from django.http import HttpResponse
+
 # Create your views here.
 def login(request):
     return render(request, "login/login.html")
@@ -11,30 +12,35 @@ def login(request):
 def home(request):
     username = request.POST.get("username").strip()
     password = request.POST.get("password").strip()
-    a = Account.objects.get(UserName=username)
-    p= People.objects.get(ID=a.people_id)
-    print(1)
-    if (a):
-        if(password == a.Password):
-            request.session['people_id'] = p.ID
-            if(p.RoleID == 1):
-                people = People.objects.all().order_by('ID')
-                return render(request, 'tablelist/index.html', {"people": people})
-            else:
-                return render(request, 'home/index.html', {"people": p})
-    return render(request, "login/login.html")
+    try:
+        a = Account.objects.get(UserName=username, Password=password)
+        p = People.objects.get(ID=a.people_id)
+        request.session['people_id'] = p.ID
+        request.session['role_id'] = p.RoleID
+        if(p.RoleID == 1):
+            people = People.objects.all().order_by('ID')
+            return render(request, 'tablelist/index.html', {"people": people})
+        else:
+            return render(request, 'home/index.html', {"people": p})
+    except:
+        return render(request, "login/login.html")
 
 def logout(request):
     del request.session['people_id']
+    del request.session['role_id']
     return render(request, "login/login.html")
 
 def listUser(request):
     people = People.objects.all().order_by('ID')
-    return render(request, 'tablelist/index.html', {"people": people})
+    if(request.session['role_id']==1):
+        return render(request, 'tablelist/index.html', {"people": people})
+    return HttpResponse('Chuc nang nay chi danh cho admin')
+    
+    
 
 def detailUser(request,people_id):
     #dulieu = request.POST['people_id']
-    print(people_id)
+    # print(people_id)
     q = People.objects.get(pk=people_id)
     return render(request, 'home/index.html', {"people": q})
 
@@ -62,10 +68,33 @@ def updateUser(request,people_id):
         return HttpResponse(f"Update không thành công")
 
 def listNotification(request):
-    timerecord = TimeRecord.objects.all()
+    if(request.session['role_id']):
+        timerecord = TimeRecord.objects.all()
+    else:
+        timerecord = TimeRecord.objects.filter(people_id= request.session['people_id'])
     list =[]
     for i in timerecord:
         p = People.objects.get(pk=i.people_id)
         list.append({'ID':p.ID,"Name":p.Name,"Age":p.Age,"Time":i.time})
         print(i.time)
     return render(request, 'notification/notification.html', {"people": list})
+
+def searchUser(request):
+    try:
+        strSearch = request.POST.get("strSearch").strip()
+        people = People.objects.filter(Name__icontains=strSearch).order_by('ID')
+        if (request.session['role_id'] == 1):
+            return render(request, 'tablelist/index.html', {"people": people})
+        # return HttpResponse('Chuc nang nay chi danh cho admin')
+    except:
+        return HttpResponse('Chuc nang nay chi danh cho admin')
+
+def deleteUser(request, people_id):
+    People.objects.filter(ID=people_id).delete()
+    people = People.objects.all().order_by('ID')
+    return render(request, 'tablelist/index.html', {"people": people})
+
+
+
+
+
