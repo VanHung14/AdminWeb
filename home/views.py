@@ -17,11 +17,8 @@ def home(request):
         p = People.objects.get(ID=a.people_id)
         request.session['people_id'] = p.ID
         request.session['role_id'] = p.RoleID
-        if(p.RoleID == 1):
-            people = People.objects.all().order_by('ID')
-            return render(request, 'tablelist/index.html', {"people": people})
-        else:
-            return render(request, 'home/index.html', {"people": p})
+        q = People.objects.get(pk=p.ID)
+        return render(request, 'home/index.html', {"people": q})
     except:
         return render(request, "login/login.html")
 
@@ -51,19 +48,27 @@ def updateUser(request,people_id):
     Gender = request.POST.get("Gender").strip()
     if(Gender == "Nam"): Gender = 1
     else: Gender = 0
-    RFID = request.POST.get("RFID").strip()
-    age = request.POST.get("Age").strip()
     roleid = updatePeople.RoleID
-    if (roleid == "User"):
-        roleid = 0
+    if(roleid == 1):
+        RFID = request.POST.get("RFID").strip()
     else:
-        roleid = 1
+        RFID = updatePeople.RFID
+    age = request.POST.get("Age").strip()
+
+    # if (roleid == "User"):
+    #     roleid = 0
+    # else:
+    #     roleid = 1
     context ={"ID":people_id,"Name":name,"Age":age,"Gender":Gender,"RFID":RFID,"RoleID":roleid}
     form = PeopleForm(context,instance= updatePeople)
     if form.is_valid():
         form.save()
         messages.success(request,"Thành công!")
-        return render(request, "tablelist/index.html", {"people": list})
+        if (request.session['role_id'] == 1):
+            return render(request, "tablelist/index.html", {"people": list})
+        else:
+            q = People.objects.get(pk=people_id)
+            return render(request, 'home/index.html', {"people": q})
     else:
         return HttpResponse(f"Update không thành công")
 

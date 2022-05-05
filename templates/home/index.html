@@ -18,12 +18,12 @@ Coded by www.creative-tim.com
  {% block sidebarblock%}
  <div class="sidebar-wrapper">
        <ul class="nav">
-          <li>
-            <a href="./dashboard">
-              <i class="nc-icon nc-bank"></i>
-              <p>Dashboard</p>
-            </a>
-          </li>
+<!--          <li>-->
+<!--            <a href="./dashboard">-->
+<!--              <i class="nc-icon nc-bank"></i>-->
+<!--              <p>Dashboard</p>-->
+<!--            </a>-->
+<!--          </li>-->
           <li>
             <a href="{% url 'home:notification' %}">
               <i class="nc-icon nc-bell-55"></i>
@@ -130,7 +130,11 @@ Coded by www.creative-tim.com
                     <div class="col-md-10">
                       <div class="form-group">
                         <label>RFID</label>
-                        <input type="text" name="RFID" class="form-control" placeholder="RFID" value="{{people.RFID}}">
+                        <input type="text" name="RFID"
+                               {% if request.session.role_id == 0 %}
+                               disabled
+                               {%endif%}
+                               class="form-control" placeholder="RFID" value="{{people.RFID}}">
                       </div>
                     </div>
                   </div>
