@@ -80,7 +80,7 @@ def listNotification(request):
     list =[]
     for i in timerecord:
         p = People.objects.get(pk=i.people_id)
-        list.append({'ID':p.ID,"Name":p.Name,"Age":p.Age,"Time":i.time})
+        list.append({'ID':p.ID,"Name":p.Name,"Age":p.Age,"Time":i.time,"checkFace":i.checkFace,"checkRFID":i.checkRFID,"ok":i.ok})
         print(i.time)
     return render(request, 'notification/notification.html', {"people": list})
 
