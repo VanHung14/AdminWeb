@@ -18,12 +18,12 @@ Coded by www.creative-tim.com
  {% block sidebarblock%}
  <div class="sidebar-wrapper">
        <ul class="nav">
-<!--          <li>-->
-<!--            <a href="./dashboard">-->
-<!--              <i class="nc-icon nc-bank"></i>-->
-<!--              <p>Dashboard</p>-->
-<!--            </a>-->
-<!--          </li>-->
+          <li>
+            <a href="{% url 'home:statistical' %}">
+              <i class="nc-icon nc-bank"></i>
+              <p>Statistical</p>
+            </a>
+          </li>
           <li>
             <a href="{% url 'home:notification' %}">
               <i class="nc-icon nc-bell-55"></i>
@@ -62,7 +62,11 @@ Coded by www.creative-tim.com
               <div class="card-body">
                 <div class="author">
                   <a href="#">
+                     {% if people.Gender == 1%}
                     <img class="avatar border-gray" src="{% static 'img/mike.jpg' %}" alt="...">
+                    {% else %}
+                    <img class="avatar border-gray"  src="{% static 'img/faces/joe-gardner-2.jpg' %}" alt="...">
+                    {%endif%}
                     <h5 style="font-size:30px;margin-bottom:20px" class="title">{{people.Name}}</h5>
                   </a>
                   <p class="description">

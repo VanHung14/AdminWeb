@@ -1,10 +1,12 @@
+import re
+from sqlite3 import Time
 from django.shortcuts import render
 from django.views import View
 from home.models import People,Account,TimeRecord
 from home.form import PeopleForm
 from django.contrib import messages
 from django.http import HttpResponse
-
+import math
 # Create your views here.
 def login(request):
     return render(request, "login/login.html")
@@ -74,13 +76,13 @@ def updateUser(request,people_id):
 
 def listNotification(request):
     if(request.session['role_id']):
-        timerecord = TimeRecord.objects.all()
+        timerecord = TimeRecord.objects.all().order_by('-time')
     else:
-        timerecord = TimeRecord.objects.filter(people_id= request.session['people_id'])
+        timerecord = TimeRecord.objects.filter(people_id= request.session['people_id']).order_by('-time')
     list =[]
     for i in timerecord:
         p = People.objects.get(pk=i.people_id)
-        list.append({'ID':p.ID,"Name":p.Name,"Age":p.Age,"Time":i.time,"checkFace":i.checkFace,"checkRFID":i.checkRFID,"ok":i.ok})
+        list.append({'ID':p.ID,"Name":p.Name,"Age":p.Age,"Time":i.time,"checkpeople":i.checkpeople,"ok":i.ok})
         print(i.time)
     return render(request, 'notification/notification.html', {"people": list})
 
@@ -99,7 +101,21 @@ def deleteUser(request, people_id):
     people = People.objects.all().order_by('ID')
     return render(request, 'tablelist/index.html', {"people": people})
 
-
-
+def statistical(request):
+    timesface = TimeRecord.objects.filter(checkpeople = 1).count()
+    timesrfid = TimeRecord.objects.filter(checkpeople = 0).count()
+    timestrueface = TimeRecord.objects.filter(checkpeople = 1, ok=1).count()
+    timestruerfid = TimeRecord.objects.filter(checkpeople = 0, ok=1).count()
+    percentface = round(timestrueface/timesface *100,2)
+    percentrfid = round(timestruerfid/timesrfid *100,2)
+    # print(statistical)
+    return render(request,'statistical/statistical.html',{
+        "timesface" : timesface,
+        "timesrfid" : timesrfid,
+        "timestrueface":timestrueface,
+        "timestruerfid":timestruerfid,
+        "percentface" : percentface,
+        "percentrfid" : percentrfid
+    })
 
 
