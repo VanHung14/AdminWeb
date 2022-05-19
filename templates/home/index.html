@@ -18,12 +18,14 @@ Coded by www.creative-tim.com
  {% block sidebarblock%}
  <div class="sidebar-wrapper">
        <ul class="nav">
+           {% if request.session.role_id == 1 %}
           <li>
             <a href="{% url 'home:statistical' %}">
               <i class="nc-icon nc-bank"></i>
               <p>Statistical</p>
             </a>
           </li>
+         {% endif %}
           <li>
             <a href="{% url 'home:notification' %}">
               <i class="nc-icon nc-bell-55"></i>
@@ -52,7 +54,7 @@ Coded by www.creative-tim.com
    {% block contentblock%}
 
       <!--   Content   -->
-      <div class="content">onter
+      <div class="content">
         <div class="row">
           <div class="col-md-4">
             <div class="card card-user">
@@ -80,9 +82,7 @@ Coded by www.creative-tim.com
                   {% endif %}
                 </p>
               </div>
-
             </div>
-
           </div>
           <div class="col-md-8">
             <div class="card card-user">
