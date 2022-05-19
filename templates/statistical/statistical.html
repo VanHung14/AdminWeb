@@ -1,12 +1,14 @@
 {% extends 'home/base.html'%} {% load static%} {% block sidebarblock%}
 <div class="sidebar-wrapper">
   <ul class="nav">
+      {% if request.session.role_id == 1 %}
     <li class="active">
             <a href="{% url 'home:statistical' %}">
               <i class="nc-icon nc-bank"></i>
               <p>Statistical</p>
             </a>
           </li>
+     {% endif%}
     <li >
       <a href="{% url 'home:notification' %}">
         <i class="nc-icon nc-bell-55"></i>

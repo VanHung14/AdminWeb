@@ -1,12 +1,14 @@
 {% extends 'home/base.html'%} {% load static%} {% block sidebarblock%}
 <div class="sidebar-wrapper">
   <ul class="nav">
- <li>
+        {% if request.session.role_id == 1 %}
+          <li>
             <a href="{% url 'home:statistical' %}">
               <i class="nc-icon nc-bank"></i>
               <p>Statistical</p>
             </a>
           </li>
+     {% endif%}
     <li class="active">
       <a href="{% url 'home:notification' %}">
         <i class="nc-icon nc-bell-55"></i>
@@ -41,20 +43,18 @@
           <div class="table-responsive">
             <table class="table">
               <thead class="text-primary">
-                <th>ID</th>
                 <th>Name</th>
-                <th>Age</th>
                 <th>Time</th>
                 <th>Face</th>
                 <th>RFID</th>
-                <th>Check</th>
               </thead>
               <tbody>
                 {% for item in people%}
-                <tr>
-                  <td>{{item.ID}}</td>
-                  <td>{{item.Name}}</td>
-                  <td>{{item.Age}}</td>
+                <tr>{% if item.Name == 'Không xác định' %}
+                  <td style="color:red">{{item.Name}}</td>
+                  {%else%}
+                   <td>{{item.Name}}</td>
+                   {% endif %}
                   <td>{{item.Time}}</td>
                   <td>
                     {% if item.checkpeople == 1%}
@@ -82,106 +82,8 @@
                     ></i>
                     {% endif %}
                   </td>
-                  <td>
-                    {% if item.ok == 1%}
-                    <i
-                      style="
-                        color: green;
-                        font-size: 16px;
-                        margin-left: 15px;
-                        height: 10px;
-                        width: 10px;
-                      "
-                      class="nc-icon nc-lock-circle-open"
-                    ></i>
-                    {% else %} {% endif %}
-                  </td>
                 </tr>
                 {% endfor%}
-                <!--                      <tr>-->
-                <!--                        <td>-->
-                <!--                          Minerva Hooper-->
-                <!--                        </td>-->
-                <!--                        <td>-->
-                <!--                          Curaçao-->
-                <!--                        </td>-->
-                <!--                        <td>-->
-                <!--                          Sinaai-Waas-->
-                <!--                        </td>-->
-                <!--                        <td class="text-right">-->
-                <!--                          $23,789-->
-                <!--                        </td>-->
-                <!--                      </tr>-->
-                <!--                      <tr>-->
-                <!--                        <td>-->
-                <!--                          Sage Rodriguez-->
-                <!--                        </td>-->
-                <!--                        <td>-->
-                <!--                          Netherlands-->
-                <!--                        </td>-->
-                <!--                        <td>-->
-                <!--                          Baileux-->
-                <!--                        </td>-->
-                <!--                        <td class="text-right">-->
-                <!--                          $56,142-->
-                <!--                        </td>-->
-                <!--                      </tr>-->
-                <!--                      <tr>-->
-                <!--                        <td>-->
-                <!--                          Philip Chaney-->
-                <!--                        </td>-->
-                <!--                        <td>-->
-                <!--                          Korea, South-->
-                <!--                        </td>-->
-                <!--                        <td>-->
-                <!--                          Overland Park-->
-                <!--                        </td>-->
-                <!--                        <td class="text-right">-->
-                <!--                          $38,735-->
-                <!--                        </td>-->
-                <!--                      </tr>-->
-                <!--                      <tr>-->
-                <!--                        <td>-->
-                <!--                          Doris Greene-->
-                <!--                        </td>-->
-                <!--                        <td>-->
-                <!--                          Malawi-->
-                <!--                        </td>-->
-                <!--                        <td>-->
-                <!--                          Feldkirchen in Kärnten-->
-                <!--                        </td>-->
-                <!--                        <td class="text-right">-->
-                <!--                          $63,542-->
-                <!--                        </td>-->
-                <!--                      </tr>-->
-                <!--                      <tr>-->
-                <!--                        <td>-->
-                <!--                          Mason Porter-->
-                <!--                        </td>-->
-                <!--                        <td>-->
-                <!--                          Chile-->
-                <!--                        </td>-->
-                <!--                        <td>-->
-                <!--                          Gloucester-->
-                <!--                        </td>-->
-                <!--                        <td class="text-right">-->
-                <!--                          $78,615-->
-                <!--                        </td>-->
-                <!--                      </tr>-->
-                <!--                      <tr>-->
-                <!--                        <td>-->
-                <!--                          Jon Porter-->
-                <!--                        </td>-->
-                <!--                        <td>-->
-                <!--                          Portugal-->
-                <!--                        </td>-->
-                <!--                        <td>-->
-                <!--                          Gloucester-->
-                <!--                        </td>-->
-                <!--                        <td class="text-right">-->
-                <!--                          $98,615-->
-                <!--                        </td>-->
-                <!--                      </tr>-->
               </tbody>
             </table>
           </div>

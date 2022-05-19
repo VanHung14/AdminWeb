@@ -19,11 +19,9 @@ class Account(models.Model):
     UserName = models.CharField(max_length=100,null=False)
     Password = models.CharField(max_length=100,null=False)
 
-class TimeRecord(models.Model):
-    people = models.ForeignKey(People, on_delete=models.CASCADE)
-    time = models.DateTimeField(null=False,default=datetime.datetime.now())
+
+class CheckPeople(models.Model):
     checkpeople = models.IntegerField(null=True,default=0)
-    # checkFace = models.IntegerField(null=True,default=0)
-    # checkRFID = models.IntegerField(null=True,default=0)
-    # check = models.IntegerField(null=True,default=0)
     ok = models.IntegerField(null=True,default=0)
+    id_check = models.IntegerField(default=0)
+    time = models.DateTimeField(null=False, default=datetime.datetime.now())
