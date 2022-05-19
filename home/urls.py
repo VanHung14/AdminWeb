@@ -12,6 +12,5 @@ urlpatterns = [
     path('home/delete/<int:people_id>/', views.deleteUser, name='delete'),
     path('home/search/', views.searchUser, name='search'),
     path('home/tablelist', views.listUser, name='tablelist'),
-    path('home/notification', views.listNotification, name='notification')
    # path('user/<int:people_id>', UpdateUser.as_view(), name='update'),
 ]
