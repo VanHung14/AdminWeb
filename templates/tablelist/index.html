@@ -4,12 +4,12 @@
 {% block sidebarblock%}
  <div class="sidebar-wrapper">
        <ul class="nav">
-<!--          <li>-->
-<!--            <a href="./dashboard">-->
-<!--              <i class="nc-icon nc-bank"></i>-->
-<!--              <p>Dashboard</p>-->
-<!--            </a>-->
-<!--          </li>-->
+          <li>
+            <a href="{% url 'home:statistical' %}">
+              <i class="nc-icon nc-bank"></i>
+              <p>Statistical</p>
+            </a>
+          </li>
           <li >
             <a href="{% url 'home:notification' %}">
               <i class="nc-icon nc-bell-55"></i>

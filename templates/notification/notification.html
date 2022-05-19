@@ -1,204 +1,194 @@
-{% extends 'home/base.html'%}
-{% load static%}
-
- {% block sidebarblock%}
- <div class="sidebar-wrapper">
-       <ul class="nav">
-<!--          <li>-->
-<!--            <a href="./dashboard">-->
-<!--              <i class="nc-icon nc-bank"></i>-->
-<!--              <p>Dashboard</p>-->
-<!--            </a>-->
-<!--          </li>-->
-          <li class="active">
-            <a href="{% url 'home:notification' %}">
-              <i class="nc-icon nc-bell-55"></i>
-              <p>Notifications</p>
+{% extends 'home/base.html'%} {% load static%} {% block sidebarblock%}
+<div class="sidebar-wrapper">
+  <ul class="nav">
+ <li>
+            <a href="{% url 'home:statistical' %}">
+              <i class="nc-icon nc-bank"></i>
+              <p>Statistical</p>
             </a>
           </li>
-          <li >
-            <a href="{% url 'home:detail' request.session.people_id %}">
-              <i class="nc-icon nc-single-02"></i>
-              <p>User Profile</p>
-            </a>
-          </li>
-          {% if request.session.role_id == 1 %}
-          <li >
-            <a href="{% url 'home:tablelist' %}">
-              <i class="nc-icon nc-tile-56"></i>
-              <p>List User </p>
-            </a>
-          </li>
-          {% endif%}
-
-        </ul>
-      </div>
-          {% endblock %}
-{% block contentblock%}
+    <li class="active">
+      <a href="{% url 'home:notification' %}">
+        <i class="nc-icon nc-bell-55"></i>
+        <p>Notifications</p>
+      </a>
+    </li>
+    <li>
+      <a href="{% url 'home:detail' request.session.people_id %}">
+        <i class="nc-icon nc-single-02"></i>
+        <p>User Profile</p>
+      </a>
+    </li>
+    {% if request.session.role_id == 1 %}
+    <li>
+      <a href="{% url 'home:tablelist' %}">
+        <i class="nc-icon nc-tile-56"></i>
+        <p>List User</p>
+      </a>
+    </li>
+    {% endif%}
+  </ul>
+</div>
+{% endblock %} {% block contentblock%}
 <div class="content">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="card">
-              <div class="card-header">
-                <h4 class="card-title">User</h4>
-              </div>
-              <div class="card-body">
-                <div class="table-responsive">
-                  <table class="table">
-                    <thead class=" text-primary">
-                      <th>
-                        ID
-                      </th>
-                      <th>
-                        Name
-                      </th>
-                      <th>
-                        Age
-                      </th>
-                      <th >
-                        Time
-                      </th>
-                      <th >
-                        Face
-                      </th>
-                      <th >
-                        RFID
-                      </th>
-                     <th >
-                        Check
-                      </th>
-                    </thead>
-                    <tbody>
-                    {% for item in people%}
-                      <tr>
-                        <td>
-                          {{item.ID}}
-                        </td>
-                        <td>
-                          {{item.Name}}
-                        </td>
-                        <td>
-                          {{item.Age}}
-                        </td>
-                        <td>
-                          {{item.Time}}
-                        </td>
-                          <td>
-                            {% if item.checkFace == 1%}
-                              <i style="color:green;font-size: 16px;margin-left:10px" class="nc-icon nc-check-2"></i>
-                              {% else %}
-                              <i style="color:red;font-size: 16px;margin-left:10px" class="nc-icon nc-simple-remove"></i>
-                              {% endif %}
-                        </td>
-                          <td>
-                              {% if item.checkRFID == 1%}
-                              <i style="color:green;font-size: 16px;margin-left:10px" class="nc-icon nc-check-2"></i>
-                              {% else %}
-                              <i style="color:red;font-size: 16px;margin-left:10px" class="nc-icon nc-simple-remove"></i>
-                              {% endif %}
-                        </td>
-                          <td>
-                              {% if item.checkRFID == 1%}
-                              <i style="color:green;font-size: 16px;margin-left:15px;height:10px;width:10px" class="nc-icon nc-lock-circle-open"></i>
-                              {% else %}
-
-                              {% endif %}
-                        </td>
-
-                      </tr>
-                    {% endfor%}
-<!--                      <tr>-->
-<!--                        <td>-->
-<!--                          Minerva Hooper-->
-<!--                        </td>-->
-<!--                        <td>-->
-<!--                          Curaçao-->
-<!--                        </td>-->
-<!--                        <td>-->
-<!--                          Sinaai-Waas-->
-<!--                        </td>-->
-<!--                        <td class="text-right">-->
-<!--                          $23,789-->
-<!--                        </td>-->
-<!--                      </tr>-->
-<!--                      <tr>-->
-<!--                        <td>-->
-<!--                          Sage Rodriguez-->
-<!--                        </td>-->
-<!--                        <td>-->
-<!--                          Netherlands-->
-<!--                        </td>-->
-<!--                        <td>-->
-<!--                          Baileux-->
-<!--                        </td>-->
-<!--                        <td class="text-right">-->
-<!--                          $56,142-->
-<!--                        </td>-->
-<!--                      </tr>-->
-<!--                      <tr>-->
-<!--                        <td>-->
-<!--                          Philip Chaney-->
-<!--                        </td>-->
-<!--                        <td>-->
-<!--                          Korea, South-->
-<!--                        </td>-->
-<!--                        <td>-->
-<!--                          Overland Park-->
-<!--                        </td>-->
-<!--                        <td class="text-right">-->
-<!--                          $38,735-->
-<!--                        </td>-->
-<!--                      </tr>-->
-<!--                      <tr>-->
-<!--                        <td>-->
-<!--                          Doris Greene-->
-<!--                        </td>-->
-<!--                        <td>-->
-<!--                          Malawi-->
-<!--                        </td>-->
-<!--                        <td>-->
-<!--                          Feldkirchen in Kärnten-->
-<!--                        </td>-->
-<!--                        <td class="text-right">-->
-<!--                          $63,542-->
-<!--                        </td>-->
-<!--                      </tr>-->
-<!--                      <tr>-->
-<!--                        <td>-->
-<!--                          Mason Porter-->
-<!--                        </td>-->
-<!--                        <td>-->
-<!--                          Chile-->
-<!--                        </td>-->
-<!--                        <td>-->
-<!--                          Gloucester-->
-<!--                        </td>-->
-<!--                        <td class="text-right">-->
-<!--                          $78,615-->
-<!--                        </td>-->
-<!--                      </tr>-->
-<!--                      <tr>-->
-<!--                        <td>-->
-<!--                          Jon Porter-->
-<!--                        </td>-->
-<!--                        <td>-->
-<!--                          Portugal-->
-<!--                        </td>-->
-<!--                        <td>-->
-<!--                          Gloucester-->
-<!--                        </td>-->
-<!--                        <td class="text-right">-->
-<!--                          $98,615-->
-<!--                        </td>-->
-<!--                      </tr>-->
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">User</h4>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table">
+              <thead class="text-primary">
+                <th>ID</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Time</th>
+                <th>Face</th>
+                <th>RFID</th>
+                <th>Check</th>
+              </thead>
+              <tbody>
+                {% for item in people%}
+                <tr>
+                  <td>{{item.ID}}</td>
+                  <td>{{item.Name}}</td>
+                  <td>{{item.Age}}</td>
+                  <td>{{item.Time}}</td>
+                  <td>
+                    {% if item.checkpeople == 1%}
+                    <i
+                      style="color: green; font-size: 16px; margin-left: 10px"
+                      class="nc-icon nc-check-2"
+                    ></i>
+                    {% else %}
+                    <i
+                      style="color: red; font-size: 16px; margin-left: 10px"
+                      class="nc-icon nc-simple-remove"
+                    ></i>
+                    {% endif %}
+                  </td>
+                  <td>
+                    {% if item.checkpeople == 0%}
+                    <i
+                      style="color: green; font-size: 16px; margin-left: 10px"
+                      class="nc-icon nc-check-2"
+                    ></i>
+                    {% else %}
+                    <i
+                      style="color: red; font-size: 16px; margin-left: 10px"
+                      class="nc-icon nc-simple-remove"
+                    ></i>
+                    {% endif %}
+                  </td>
+                  <td>
+                    {% if item.ok == 1%}
+                    <i
+                      style="
+                        color: green;
+                        font-size: 16px;
+                        margin-left: 15px;
+                        height: 10px;
+                        width: 10px;
+                      "
+                      class="nc-icon nc-lock-circle-open"
+                    ></i>
+                    {% else %} {% endif %}
+                  </td>
+                </tr>
+                {% endfor%}
+                <!--                      <tr>-->
+                <!--                        <td>-->
+                <!--                          Minerva Hooper-->
+                <!--                        </td>-->
+                <!--                        <td>-->
+                <!--                          Curaçao-->
+                <!--                        </td>-->
+                <!--                        <td>-->
+                <!--                          Sinaai-Waas-->
+                <!--                        </td>-->
+                <!--                        <td class="text-right">-->
+                <!--                          $23,789-->
+                <!--                        </td>-->
+                <!--                      </tr>-->
+                <!--                      <tr>-->
+                <!--                        <td>-->
+                <!--                          Sage Rodriguez-->
+                <!--                        </td>-->
+                <!--                        <td>-->
+                <!--                          Netherlands-->
+                <!--                        </td>-->
+                <!--                        <td>-->
+                <!--                          Baileux-->
+                <!--                        </td>-->
+                <!--                        <td class="text-right">-->
+                <!--                          $56,142-->
+                <!--                        </td>-->
+                <!--                      </tr>-->
+                <!--                      <tr>-->
+                <!--                        <td>-->
+                <!--                          Philip Chaney-->
+                <!--                        </td>-->
+                <!--                        <td>-->
+                <!--                          Korea, South-->
+                <!--                        </td>-->
+                <!--                        <td>-->
+                <!--                          Overland Park-->
+                <!--                        </td>-->
+                <!--                        <td class="text-right">-->
+                <!--                          $38,735-->
+                <!--                        </td>-->
+                <!--                      </tr>-->
+                <!--                      <tr>-->
+                <!--                        <td>-->
+                <!--                          Doris Greene-->
+                <!--                        </td>-->
+                <!--                        <td>-->
+                <!--                          Malawi-->
+                <!--                        </td>-->
+                <!--                        <td>-->
+                <!--                          Feldkirchen in Kärnten-->
+                <!--                        </td>-->
+                <!--                        <td class="text-right">-->
+                <!--                          $63,542-->
+                <!--                        </td>-->
+                <!--                      </tr>-->
+                <!--                      <tr>-->
+                <!--                        <td>-->
+                <!--                          Mason Porter-->
+                <!--                        </td>-->
+                <!--                        <td>-->
+                <!--                          Chile-->
+                <!--                        </td>-->
+                <!--                        <td>-->
+                <!--                          Gloucester-->
+                <!--                        </td>-->
+                <!--                        <td class="text-right">-->
+                <!--                          $78,615-->
+                <!--                        </td>-->
+                <!--                      </tr>-->
+                <!--                      <tr>-->
+                <!--                        <td>-->
+                <!--                          Jon Porter-->
+                <!--                        </td>-->
+                <!--                        <td>-->
+                <!--                          Portugal-->
+                <!--                        </td>-->
+                <!--                        <td>-->
+                <!--                          Gloucester-->
+                <!--                        </td>-->
+                <!--                        <td class="text-right">-->
+                <!--                          $98,615-->
+                <!--                        </td>-->
+                <!--                      </tr>-->
+              </tbody>
+            </table>
           </div>
-          
         </div>
       </div>
-  <!-- End Content -->
-    {% endblock %}
+    </div>
+  </div>
+</div>
+<!-- End Content -->
+{% endblock %}

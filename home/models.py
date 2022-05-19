@@ -22,7 +22,8 @@ class Account(models.Model):
 class TimeRecord(models.Model):
     people = models.ForeignKey(People, on_delete=models.CASCADE)
     time = models.DateTimeField(null=False,default=datetime.datetime.now())
-    checkFace = models.IntegerField(null=True,default=0)
-    checkRFID = models.IntegerField(null=True,default=0)
+    checkpeople = models.IntegerField(null=True,default=0)
+    # checkFace = models.IntegerField(null=True,default=0)
+    # checkRFID = models.IntegerField(null=True,default=0)
     # check = models.IntegerField(null=True,default=0)
     ok = models.IntegerField(null=True,default=0)
