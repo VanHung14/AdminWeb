@@ -107,7 +107,9 @@ def deleteUser(request, people_id):
     return render(request, 'tablelist/index.html', {"people": people})
 
 def statistical(request):
+    # 1 : Face
     timesface = CheckPeople.objects.filter(checkpeople = 1).count()
+    # 0 : RFID
     timesrfid = CheckPeople.objects.filter(checkpeople = 0).count()
     timestrueface = CheckPeople.objects.filter(checkpeople = 1, ok=1).count()
     timestruerfid = CheckPeople.objects.filter(checkpeople = 0, ok=1).count()

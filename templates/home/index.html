@@ -90,7 +90,7 @@ Coded by www.creative-tim.com
                 <h5 class="card-title">Edit Profile</h5>
               </div>
               <div class="card-body">
-                <form method="post" action="{% url 'home:update' people.ID%}">
+                <form method="post" action="{% url 'home:update' people.ID %}">
                   {% csrf_token %}
                   <div class="row">
                     <div class="col-md-5 pr-1">
