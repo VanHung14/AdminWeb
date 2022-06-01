@@ -1,31 +1,31 @@
 {% extends 'home/base.html'%} {% load static%} {% block sidebarblock%}
 <div class="sidebar-wrapper">
   <ul class="nav">
-        {% if request.session.role_id == 1 %}
-          <li>
-            <a href="{% url 'home:statistical' %}">
-              <i class="nc-icon nc-bank"></i>
-              <p>Statistical</p>
-            </a>
-          </li>
-     {% endif%}
+    {% if request.session.role_id == 1 %}
+    <li>
+      <a href="{% url 'home:statistical' %}">
+        <i class="nc-icon nc-bank"></i>
+        <p>Thống kê</p>
+      </a>
+    </li>
+    {% endif%}
     <li class="active">
       <a href="{% url 'home:notification' %}">
         <i class="nc-icon nc-bell-55"></i>
-        <p>Notifications</p>
+        <p>Thông báo</p>
       </a>
     </li>
     <li>
       <a href="{% url 'home:detail' request.session.people_id %}">
         <i class="nc-icon nc-single-02"></i>
-        <p>User Profile</p>
+        <p>Thông tin người dùng</p>
       </a>
     </li>
     {% if request.session.role_id == 1 %}
     <li>
       <a href="{% url 'home:tablelist' %}">
         <i class="nc-icon nc-tile-56"></i>
-        <p>List User</p>
+        <p>Người dùng</p>
       </a>
     </li>
     {% endif%}
@@ -43,18 +43,19 @@
           <div class="table-responsive">
             <table class="table">
               <thead class="text-primary">
-                <th>Name</th>
-                <th>Time</th>
-                <th>Face</th>
-                <th>RFID</th>
+                <th>Tên</th>
+                <th>Thời gian</th>
+                <th>Gương mặt</th>
+                <th>Thẻ RFID</th>
               </thead>
               <tbody>
                 {% for item in people%}
-                <tr>{% if item.Name == 'Không xác định' %}
-                  <td style="color:red">{{item.Name}}</td>
+                <tr>
+                  {% if item.Name == 'Không xác định' %}
+                  <td style="color: red">{{item.Name}}</td>
                   {%else%}
-                   <td>{{item.Name}}</td>
-                   {% endif %}
+                  <td>{{item.Name}}</td>
+                  {% endif %}
                   <td>{{item.Time}}</td>
                   <td>
                     {% if item.checkpeople == 1%}
