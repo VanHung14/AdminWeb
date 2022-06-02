@@ -1,31 +1,31 @@
 {% extends 'home/base.html'%} {% load static%} {% block sidebarblock%}
 <div class="sidebar-wrapper">
   <ul class="nav">
-      {% if request.session.role_id == 1 %}
+    {% if request.session.role_id == 1 %}
     <li class="active">
-            <a href="{% url 'home:statistical' %}">
-              <i class="nc-icon nc-bank"></i>
-              <p>Statistical</p>
-            </a>
-          </li>
-     {% endif%}
-    <li >
+      <a href="{% url 'home:statistical' %}">
+        <i class="nc-icon nc-bank"></i>
+        <p>Thống kê</p>
+      </a>
+    </li>
+    {% endif%}
+    <li>
       <a href="{% url 'home:notification' %}">
         <i class="nc-icon nc-bell-55"></i>
-        <p>Notifications</p>
+        <p>Thông báo</p>
       </a>
     </li>
     <li>
       <a href="{% url 'home:detail' request.session.people_id %}">
         <i class="nc-icon nc-single-02"></i>
-        <p>User Profile</p>
+        <p>Thông tin người dùng</p>
       </a>
     </li>
     {% if request.session.role_id == 1 %}
     <li>
       <a href="{% url 'home:tablelist' %}">
         <i class="nc-icon nc-tile-56"></i>
-        <p>List User</p>
+        <p>Người dùng</p>
       </a>
     </li>
     {% endif%}
@@ -33,7 +33,7 @@
 </div>
 {% endblock %} {% block contentblock%}
 <div class="content">
-  <div class=" justify-content-center row">
+  <div class="justify-content-center row">
     <div class="col-md-8">
       <div class="card">
         <div class="card-header">
@@ -44,19 +44,19 @@
             <table class="table">
               <thead class="text-primary">
                 <th></th>
-                <th>Times</th>
-                <th>True</th>
-                <th>Percent</th>
+                <th>Số lần</th>
+                <th>Nhận diện đúng</th>
+                <th>Tỉ lệ</th>
               </thead>
               <tbody>
-                <tr >
-                  <td>Face</td>
+                <tr>
+                  <td>Gương mặt</td>
                   <td>{{timesface}}</td>
                   <td>{{timestrueface}}</td>
                   <td>{{percentface}}%</td>
                 </tr>
                 <tr>
-                  <td>RFID</td>
+                  <td>Thẻ RFID</td>
                   <td>{{timesrfid}}</td>
                   <td>{{timestruerfid}}</td>
                   <td>{{percentrfid}}%</td>

@@ -1,131 +1,101 @@
+{% extends 'home/base.html'%} {% load static%} {% block sidebarblock%}
+<div class="sidebar-wrapper">
+  <ul class="nav">
+    <li>
+      <a href="{% url 'home:statistical' %}">
+        <i class="nc-icon nc-bank"></i>
+        <p>Thống kê</p>
+      </a>
+    </li>
+    <li>
+      <a href="{% url 'home:notification' %}">
+        <i class="nc-icon nc-bell-55"></i>
+        <p>Thông báo</p>
+      </a>
+    </li>
+    <li>
+      <a href="{% url 'home:detail' request.session.people_id %}">
+        <i class="nc-icon nc-single-02"></i>
+        <p>Thông tin người dùng</p>
+      </a>
+    </li>
+    {% if request.session.role_id == 1 %}
+    <li class="active">
+      <a href="{% url 'home:tablelist' %}">
+        <i class="nc-icon nc-tile-56"></i>
+        <p>Người dùng</p>
+      </a>
+    </li>
+    {% endif%}
+  </ul>
+</div>
+{% endblock %} {% block contentblock%}
 
-{% extends 'home/base.html'%}
-{% load static%}
-{% block sidebarblock%}
- <div class="sidebar-wrapper">
-       <ul class="nav">
-          <li>
-            <a href="{% url 'home:statistical' %}">
-              <i class="nc-icon nc-bank"></i>
-              <p>Statistical</p>
-            </a>
-          </li>
-          <li >
-            <a href="{% url 'home:notification' %}">
-              <i class="nc-icon nc-bell-55"></i>
-              <p>Notifications</p>
-            </a>
-          </li>
-          <li >
-            <a href="{% url 'home:detail' request.session.people_id %}">
-              <i class="nc-icon nc-single-02"></i>
-              <p>User Profile</p>
-            </a>
-          </li>
-          {% if request.session.role_id == 1 %}
-          <li class="active" >
-            <a href="{% url 'home:tablelist' %}">
-              <i class="nc-icon nc-tile-56"></i>
-              <p>List User </p>
-            </a>
-          </li>
-          {% endif%}
+<!--   Content   -->
+<div class="content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">User</h4>
 
-        </ul>
-      </div>
-          {% endblock %}
-   {% block contentblock%}
-   
-      <!--   Content   -->
-      <div class="content">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="card">
-              <div class="card-header">
-                <h4 class="card-title">User</h4>
-
-                 <form method="post" action="{% url 'home:search' %}">
-                   {% csrf_token %}
-                  <div style="width:40%" class="input-group no-border" >
-                    <input  type="text" name="strSearch" value="" class="form-control" placeholder="Search..." >
-                    <div class="input-group-append">
-                      <div class="input-group-text">
-                        <button type="submit" class="btn btn-primary btn-round"><i class="nc-icon nc-zoom-split"></i></button>
-                      </div>
-                    </div>
-                  </div>
-                </form>
-              </div>
-
-
-
-              <div class="card-body">
-                <div class="table-responsive">
-                  <table class="table">
-                    <thead class=" text-primary">
-                      <th>
-                        ID
-                      </th>
-                      <th>
-                        Name
-                      </th>
-                      <th>
-                        Age
-                      </th>
-                      <th >
-                        Gender
-                      </th>
-                      <th >
-                        Role
-                      </th>
-                    </thead>
-                    <tbody>
-                    {% for item in people%}
-                      <tr>
-                        <td>
-                          {{item.ID}}
-                        </td>
-                        <td>
-                          {{item.Name}}
-                        </td>
-                        <td>
-                          {{item.Age}}
-                        </td>
-                        <td>
-                          {% if item.Gender == 1  %}
-                            Nam
-                          {% else %} Nữ
-                          {%endif%}
-                        </td>
-                        <td>
-                          {% if item.RoleID == 1  %}
-                            Admin
-                          {% else %} User
-                          {%endif%}
-                        </td>
-                        <td>
-                          <a href="{% url 'home:detail' item.ID %}">Edit</a>
-
-                        </td>
-                        <td>
-
-                          <a href="{% url 'home:delete' item.ID %}">Delete</a>
-                        </td>
-                      </tr>
-                    {% endfor%}
-                    
-                    </tbody>
-                  </table>
+          <form method="post" action="{% url 'home:search' %}">
+            {% csrf_token %}
+            <div style="width: 40%" class="input-group no-border">
+              <input
+                type="text"
+                name="strSearch"
+                value=""
+                class="form-control"
+                placeholder="Search..."
+              />
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <button type="submit" class="btn btn-primary btn-round">
+                    <i class="nc-icon nc-zoom-split"></i>
+                  </button>
                 </div>
               </div>
             </div>
+          </form>
+        </div>
+
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table">
+              <thead class="text-primary">
+                <th>ID</th>
+                <th>Tên</th>
+                <th>Tuổi</th>
+                <th>Giới tính</th>
+                <th>Loại tài khoản</th>
+              </thead>
+              <tbody>
+                {% for item in people%}
+                <tr>
+                  <td>{{item.ID}}</td>
+                  <td>{{item.Name}}</td>
+                  <td>{{item.Age}}</td>
+                  <td>{% if item.Gender == 1 %} Nam {% else %} Nữ {%endif%}</td>
+                  <td>
+                    {% if item.RoleID == 1 %} Admin {% else %} User {%endif%}
+                  </td>
+                  <td>
+                    <a href="{% url 'home:detail' item.ID %}">Sửa</a>
+                  </td>
+                  <td>
+                    <a href="{% url 'home:delete' item.ID %}">Xóa</a>
+                  </td>
+                </tr>
+                {% endfor%}
+              </tbody>
+            </table>
           </div>
-          
         </div>
       </div>
-  <!-- End Content -->
+    </div>
+  </div>
+</div>
+<!-- End Content -->
 
-    {% endblock %}
-   
-
-
+{% endblock %}
