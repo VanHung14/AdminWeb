@@ -26,7 +26,7 @@ Coded by www.creative-tim.com
     <li>
       <a href="{% url 'home:notification' %}">
         <i class="nc-icon nc-bell-55"></i>
-        <p>thông báo</p>
+        <p>LỊch SỬ</p>
       </a>
     </li>
     <li class="active">
@@ -58,22 +58,14 @@ Coded by www.creative-tim.com
         <div class="card-body">
           <div class="author">
             <a href="#">
-              {% if people.Gender == 1%}
               <img
                 class="avatar border-gray"
-                src="{% static 'img/mike.jpg' %}"
+                style="height: 240px; width: 280px"
+                src="{% static people.get_url_image %}"
                 alt="..."
               />
-              {% else %}
-              <img
-                class="avatar border-gray"
-                src="{% static 'img/faces/joe-gardner-2.jpg' %}"
-                alt="..."
-              />
-              {%endif%}
-              <h5 style="font-size: 30px; margin-bottom: 20px" class="title">
-                {{people.Name}}
-              </h5>
+
+              <h5 style="font-size: 30px; margin-bottom: 20px" class="title">{{people.Name}}</h5>
             </a>
             <p class="description"></p>
           </div>
@@ -108,14 +100,7 @@ Coded by www.creative-tim.com
               <div class="col-md-5 pr-1">
                 <div class="form-group">
                   <label>ID</label>
-                  <input
-                    type="text"
-                    name="ID"
-                    class="form-control"
-                    placeholder="ID"
-                    disabled
-                    value="{{people.ID}}"
-                  />
+                  <input type="text" name="ID" class="form-control" placeholder="ID" disabled value="{{people.ID}}" />
                 </div>
               </div>
             </div>
@@ -123,13 +108,7 @@ Coded by www.creative-tim.com
               <div class="col-md-10">
                 <div class="form-group">
                   <label>Tên</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    name="Name"
-                    placeholder="Company"
-                    value="{{people.Name}}"
-                  />
+                  <input type="text" class="form-control" name="Name" placeholder="Company" value="{{people.Name}}" />
                 </div>
               </div>
             </div>
@@ -137,13 +116,7 @@ Coded by www.creative-tim.com
               <div class="col-md-4 pr-1">
                 <div class="form-group">
                   <label>Tuổi</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    name="Age"
-                    placeholder="Age"
-                    value="{{people.Age}}"
-                  />
+                  <input type="text" class="form-control" name="Age" placeholder="Age" value="{{people.Age}}" />
                 </div>
               </div>
               <div class="col-md-4 px-1">
@@ -164,13 +137,7 @@ Coded by www.creative-tim.com
                 <div class="form-group">
                   <label>RFID</label>
                   {% if request.session.role_id == 1 %}
-                  <input
-                    type="text"
-                    name="RFID"
-                    class="form-control"
-                    placeholder="RFID"
-                    value="{{people.RFID}}"
-                  />
+                  <input type="text" name="RFID" class="form-control" placeholder="RFID" value="{{people.RFID}}" />
                   {% else %}
                   <input
                     type="text"
@@ -186,9 +153,7 @@ Coded by www.creative-tim.com
             </div>
             <div class="row">
               <div class="update ml-auto mr-auto">
-                <button type="submit" class="btn btn-primary btn-round">
-                  Cập nhập
-                </button>
+                <button type="submit" class="btn btn-primary btn-round">Cập nhập</button>
               </div>
             </div>
           </form>

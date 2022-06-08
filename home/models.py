@@ -10,6 +10,9 @@ class People(models.Model):
     RFID = models.CharField(max_length=15,null=True)
     RoleID = models.IntegerField(null=True)
 
+    def get_url_image(self):
+        return "img/dataset/" +str(self.ID) + "/User." + str(self.ID) +'.1' +".jpg"
+
 class Account(models.Model):
     people = models.OneToOneField(
         People,
@@ -25,3 +28,4 @@ class CheckPeople(models.Model):
     ok = models.IntegerField(null=True,default=0)
     id_check = models.IntegerField(default=0)
     time = models.DateTimeField(null=False, default=datetime.datetime.now())
+   

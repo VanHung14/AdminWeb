@@ -31,6 +31,7 @@ def logout(request):
 
 def listUser(request):
     people = People.objects.all().order_by('ID')
+    
     if(request.session['role_id']==1):
         return render(request, 'tablelist/index.html', {"people": people})
     return HttpResponse('Chuc nang nay chi danh cho admin')

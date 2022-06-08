@@ -10,7 +10,7 @@
     <li>
       <a href="{% url 'home:notification' %}">
         <i class="nc-icon nc-bell-55"></i>
-        <p>Thông báo</p>
+        <p>Lịch sử</p>
       </a>
     </li>
     <li>
@@ -42,13 +42,7 @@
           <form method="post" action="{% url 'home:search' %}">
             {% csrf_token %}
             <div style="width: 40%" class="input-group no-border">
-              <input
-                type="text"
-                name="strSearch"
-                value=""
-                class="form-control"
-                placeholder="Search..."
-              />
+              <input type="text" name="strSearch" value="" class="form-control" placeholder="Search..." />
               <div class="input-group-append">
                 <div class="input-group-text">
                   <button type="submit" class="btn btn-primary btn-round">
@@ -69,6 +63,7 @@
                 <th>Tuổi</th>
                 <th>Giới tính</th>
                 <th>Loại tài khoản</th>
+                <th>Ảnh</th>
               </thead>
               <tbody>
                 {% for item in people%}
@@ -77,8 +72,11 @@
                   <td>{{item.Name}}</td>
                   <td>{{item.Age}}</td>
                   <td>{% if item.Gender == 1 %} Nam {% else %} Nữ {%endif%}</td>
+                  <td>{% if item.RoleID == 1 %} Admin {% else %} User {%endif%}</td>
                   <td>
-                    {% if item.RoleID == 1 %} Admin {% else %} User {%endif%}
+                    <div>
+                      <img src="{% static item.get_url_image %}" style="height: 150px; width: 190px" alt="" />
+                    </div>
                   </td>
                   <td>
                     <a href="{% url 'home:detail' item.ID %}">Sửa</a>

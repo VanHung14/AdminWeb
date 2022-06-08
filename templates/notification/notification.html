@@ -12,7 +12,7 @@
     <li class="active">
       <a href="{% url 'home:notification' %}">
         <i class="nc-icon nc-bell-55"></i>
-        <p>Thông báo</p>
+        <p>Lịch sử</p>
       </a>
     </li>
     <li>
@@ -59,28 +59,16 @@
                   <td>{{item.Time}}</td>
                   <td>
                     {% if item.checkpeople == 1%}
-                    <i
-                      style="color: green; font-size: 16px; margin-left: 10px"
-                      class="nc-icon nc-check-2"
-                    ></i>
+                    <i style="color: green; font-size: 16px; margin-left: 10px" class="nc-icon nc-check-2"></i>
                     {% else %}
-                    <i
-                      style="color: red; font-size: 16px; margin-left: 10px"
-                      class="nc-icon nc-simple-remove"
-                    ></i>
+                    <i style="color: red; font-size: 16px; margin-left: 10px" class="nc-icon nc-simple-remove"></i>
                     {% endif %}
                   </td>
                   <td>
                     {% if item.checkpeople == 0%}
-                    <i
-                      style="color: green; font-size: 16px; margin-left: 10px"
-                      class="nc-icon nc-check-2"
-                    ></i>
+                    <i style="color: green; font-size: 16px; margin-left: 10px" class="nc-icon nc-check-2"></i>
                     {% else %}
-                    <i
-                      style="color: red; font-size: 16px; margin-left: 10px"
-                      class="nc-icon nc-simple-remove"
-                    ></i>
+                    <i style="color: red; font-size: 16px; margin-left: 10px" class="nc-icon nc-simple-remove"></i>
                     {% endif %}
                   </td>
                 </tr>
