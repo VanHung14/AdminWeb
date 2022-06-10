@@ -75,7 +75,9 @@
                   <td>{% if item.RoleID == 1 %} Admin {% else %} User {%endif%}</td>
                   <td>
                     <div>
-                      <img src="{% static item.get_url_image %}" style="height: 150px; width: 190px" alt="" />
+                      <!-- <img src="{% static item.get_url_image %}" style="height: 150px; width: 190px" alt="" /> -->
+
+                      <img src="data:image/png;base64,{{item.image}}" style="height: 150px; width: 190px" alt="" />
                     </div>
                   </td>
                   <td>

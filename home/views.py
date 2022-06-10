@@ -1,12 +1,45 @@
-import re
-from sqlite3 import Time
+import sqlite3
+
+
 from django.shortcuts import render
-from django.views import View
+
 from home.models import People,Account,CheckPeople
 from home.form import PeopleForm
 from django.contrib import messages
 from django.http import HttpResponse
-import math
+import os
+
+def writeTofile(data, filename):
+    # Convert binary data to proper format and write it on Hard Disk
+    with open(filename, 'wb') as file:
+        file.write(data)
+    
+
+def readBlobData(empId):
+    try:
+        
+        sqliteConnection = sqlite3.connect('db.sqlite3')
+        cursor = sqliteConnection.cursor()
+
+        sql_fetch_blob_query = """SELECT * from home_checkpeople where id = ?"""
+        cursor.execute(sql_fetch_blob_query, (empId,))
+        print(3)
+        record = cursor.fetchall()
+        for row in record:
+            photo = row[5]
+           
+            photoPath = "C:\\Users\\LENOVO\\PycharmProjects\\pythonProject\\PBL5\\AdminWeb\\image" + str(row[1]) + ".jpg"
+            writeTofile(photo, photoPath)
+        cursor.close()
+
+    except sqlite3.Error as error:
+            print(1)
+    finally:
+        if sqliteConnection:
+            sqliteConnection.close()
+            
+
+
 # Create your views here.
 def login(request):
     return render(request, "login/login.html")
@@ -31,9 +64,12 @@ def logout(request):
 
 def listUser(request):
     people = People.objects.all().order_by('ID')
-    
+    #BUG
+    people = list(people)
+    for i in people:
+        i.image = i.image.decode("utf-8")
     if(request.session['role_id']==1):
-        return render(request, 'tablelist/index.html', {"people": people})
+        return render(request, 'tablelist/index.html', {"people": people })
     return HttpResponse('Chuc nang nay chi danh cho admin')
     
     
@@ -42,6 +78,7 @@ def detailUser(request,people_id):
     #dulieu = request.POST['people_id']
     # print(people_id)
     q = People.objects.get(pk=people_id)
+    q.image = q.image.decode("utf-8")
     return render(request, 'home/index.html', {"people": q})
 
 def updateUser(request,people_id):
@@ -76,20 +113,22 @@ def updateUser(request,people_id):
         return HttpResponse(f"Update không thành công")
 
 def listNotification(request):
-
+    # 
     if(request.session['role_id']):
         # lấy tất cả
         timerecord = CheckPeople.objects.all()
-        print(1)
+        
     else:
         timerecord = CheckPeople.objects.filter(id_check= request.session['people_id']).order_by('-time')
     list =[]
+    dem = 1
     for i in timerecord:
         if i.id_check == 0:
-            list.append({"Name": "Không xác định", "Time": i.time, "checkpeople": i.checkpeople})
+            list.append({"Name": "Không xác định", "Time": i.time, "checkpeople": i.checkpeople,'image': i.image.decode("utf-8") })
         else:
             p = People.objects.get(pk=i.id_check)
-            list.append({"Name":p.Name,"Time":i.time,"checkpeople":i.checkpeople})
+            list.append({"Name":p.Name,"Time":i.time,"checkpeople":i.checkpeople,'image': i.image.decode("utf-8") })
+    
     return render(request, 'notification/notification.html', {"people": list})
 
 def searchUser(request):
@@ -114,8 +153,15 @@ def statistical(request):
     timesrfid = CheckPeople.objects.filter(checkpeople = 0).count()
     timestrueface = CheckPeople.objects.filter(checkpeople = 1, ok=1).count()
     timestruerfid = CheckPeople.objects.filter(checkpeople = 0, ok=1).count()
-    percentface = round(timestrueface/timesface *100,2)
-    percentrfid = round(timestruerfid/timesrfid *100,2)
+    if (timesface !=0 ):
+        percentface = round(timestrueface/timesface *100,2)
+    else:
+        percentface =0
+        
+    if (timesrfid !=0 ):
+        percentrfid = round(timestruerfid/timesrfid *100,2)
+    else:
+        percentrfid=0
     # print(statistical)
     return render(request,'statistical/statistical.html',{
         "timesface" : timesface,

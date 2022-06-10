@@ -1,6 +1,8 @@
+import base64
 import datetime
 
 from django.db import models
+from matplotlib import image
 # Create your models here.
 class People(models.Model):
     ID = models.IntegerField(primary_key=True, null=False, default=0)
@@ -9,9 +11,13 @@ class People(models.Model):
     Gender = models.IntegerField(null=True)
     RFID = models.CharField(max_length=15,null=True)
     RoleID = models.IntegerField(null=True)
+    image = models.TextField(null=True)
 
     def get_url_image(self):
         return "img/dataset/" +str(self.ID) + "/User." + str(self.ID) +'.1' +".jpg"
+
+    def get_image(self):
+        return str(self.image)
 
 class Account(models.Model):
     people = models.OneToOneField(
@@ -28,4 +34,8 @@ class CheckPeople(models.Model):
     ok = models.IntegerField(null=True,default=0)
     id_check = models.IntegerField(default=0)
     time = models.DateTimeField(null=False, default=datetime.datetime.now())
-   
+    image = models.TextField(null=True)
+
+
+    def decode_image(self):
+        return self.image.decode('utf-8')   

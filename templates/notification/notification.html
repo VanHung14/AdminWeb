@@ -47,6 +47,7 @@
                 <th>Thời gian</th>
                 <th>Gương mặt</th>
                 <th>Thẻ RFID</th>
+                <th>Ảnh</th>
               </thead>
               <tbody>
                 {% for item in people%}
@@ -70,6 +71,13 @@
                     {% else %}
                     <i style="color: red; font-size: 16px; margin-left: 10px" class="nc-icon nc-simple-remove"></i>
                     {% endif %}
+                  </td>
+                  <td>
+                    <img
+                      alt="Embedded Image"
+                      src="data:image/png;base64,{{item.image}}"
+                      style="height: 150px; width: 190px"
+                    />
                   </td>
                 </tr>
                 {% endfor%}
