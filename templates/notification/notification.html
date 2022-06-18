@@ -47,7 +47,7 @@
                 <th>Thời gian</th>
                 <th>Gương mặt</th>
                 <th>Thẻ RFID</th>
-                <th>Ảnh</th>
+                <th style="text-align: center">Ảnh</th>
               </thead>
               <tbody>
                 {% for item in people%}
@@ -72,12 +72,12 @@
                     <i style="color: red; font-size: 16px; margin-left: 10px" class="nc-icon nc-simple-remove"></i>
                     {% endif %}
                   </td>
-                  <td>
+                  <td style="height: 200px">
                     {% if item.image %}
                     <img
                       alt="Embedded Image"
                       src="data:image/png;base64,{{item.image}}"
-                      style="height: 150px; width: 190px"
+                      style="height: 150px; width: 190px; margin-left: 130px"
                     />
                     {%endif%}
                   </td>
@@ -85,11 +85,27 @@
                 {% endfor%}
               </tbody>
             </table>
+            <div class="pagination" style="dipslay: flex; justify-content: center">
+              <span class="step-links">
+                {% if people.has_previous %}
+                <a href="?page=1">&laquo; First</a>
+                <a href="?page={{ people.previous_page_number }}">Previous</a>
+                {% endif %}
+
+                <span class="current"> Page {{ people.number }} of {{ people.paginator.num_pages }}. </span>
+
+                {% if people.has_next %}
+                <a href="?page={{ people.next_page_number }}">Next</a>
+                <a href="?page={{ people.paginator.num_pages }}">Last &raquo;</a>
+                {% endif %}
+              </span>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
 <!-- End Content -->
 {% endblock %}

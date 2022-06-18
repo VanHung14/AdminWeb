@@ -90,6 +90,21 @@
                 {% endfor%}
               </tbody>
             </table>
+            <div class="pagination" style="dipslay: flex; justify-content: center">
+              <span class="step-links">
+                {% if people.has_previous %}
+                <a href="?page=1">&laquo; First</a>
+                <a href="?page={{ people.previous_page_number }}">Previous</a>
+                {% endif %}
+
+                <span class="current"> Page {{ people.number }} of {{ people.paginator.num_pages }}. </span>
+
+                {% if people.has_next %}
+                <a href="?page={{ people.next_page_number }}">Next</a>
+                <a href="?page={{ people.paginator.num_pages }}">Last &raquo;</a>
+                {% endif %}
+              </span>
+            </div>
           </div>
         </div>
       </div>

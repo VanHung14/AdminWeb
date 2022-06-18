@@ -2,6 +2,7 @@ import sqlite3
 
 
 from django.shortcuts import render
+from django.core.paginator import Paginator
 
 from home.models import People,Account,CheckPeople
 from home.form import PeopleForm
@@ -69,7 +70,10 @@ def listUser(request):
     for i in people:
         i.image = i.image.decode("utf-8")
     if(request.session['role_id']==1):
-        return render(request, 'tablelist/index.html', {"people": people })
+        paginator = Paginator(people, 15) # Show 25 contacts per page.
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+        return render(request, 'tablelist/index.html', {"people": page_obj })
     return HttpResponse('Chuc nang nay chi danh cho admin')
     
     
@@ -122,14 +126,32 @@ def listNotification(request):
         timerecord = CheckPeople.objects.filter(id_check= request.session['people_id']).order_by('-time')
     list =[]
     dem = 1
+    # for i in timerecord:
+    #     if i.id_check == 0:
+    #         list.append({"Name": "Không xác định", "Time": i.time, "checkpeople": i.checkpeople,'image': i.image.decode("utf-8") })
+    #     else:
+    #         p = People.objects.get(pk=i.id_check)
+    #         list.append({"Name":p.Name,"Time":i.time,"checkpeople":i.checkpeople,'image': i.image.decode("utf-8") })
+    
     for i in timerecord:
         if i.id_check == 0:
-            list.append({"Name": "Không xác định", "Time": i.time, "checkpeople": i.checkpeople,'image': i.image.decode("utf-8") })
+            if i.checkpeople == 1:
+                list.append({"Name": "Không xác định", "Time": i.time, "checkpeople": i.checkpeople,'image': i.image.decode("utf-8") })
+            else:
+                list.append({"Name": "Không xác định", "Time": i.time, "checkpeople": i.checkpeople})
         else:
             p = People.objects.get(pk=i.id_check)
-            list.append({"Name":p.Name,"Time":i.time,"checkpeople":i.checkpeople,'image': i.image.decode("utf-8") })
+            if i.checkpeople == 1:
+                list.append({"Name":p.Name,"Time":i.time,"checkpeople":i.checkpeople,'image': i.image.decode("utf-8") })
+            else:
+                list.append({"Name":p.Name,"Time":i.time,"checkpeople":i.checkpeople})
+                
+    paginator = Paginator(list, 15) # Show 25 contacts per page.
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     
-    return render(request, 'notification/notification.html', {"people": list})
+    return render(request, 'notification/notification.html', {"people": page_obj})
 
 def searchUser(request):
     try:
