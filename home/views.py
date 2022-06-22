@@ -120,7 +120,7 @@ def listNotification(request):
     # 
     if(request.session['role_id']):
         # lấy tất cả
-        timerecord = CheckPeople.objects.all()
+        timerecord = CheckPeople.objects.all().order_by('-time')
         
     else:
         timerecord = CheckPeople.objects.filter(id_check= request.session['people_id']).order_by('-time')
